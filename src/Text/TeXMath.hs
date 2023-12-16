@@ -65,7 +65,6 @@ module Text.TeXMath ( readMathML,
                       writeTypst,
                       writeOMML,
                       writeMathML,
-                      writePandoc,
                       DisplayType(..),
                       Exp
                       )
@@ -75,7 +74,6 @@ import Text.TeXMath.Readers.MathML
 import Text.TeXMath.Readers.OMML
 import Text.TeXMath.Writers.MathML
 import Text.TeXMath.Writers.OMML
-import Text.TeXMath.Writers.Pandoc
 import Text.TeXMath.Writers.TeX
 import Text.TeXMath.Writers.Eqn
 import Text.TeXMath.Writers.Typst

@@ -1,4 +1,4 @@
 packages: .
 flags: +executable
 package *
-  ghc-options: "-fexternal-interpreter" "-pgmL /nix/store/z8hizfp51krrfccb0pfqvr8wyvdp6kwv-wasm32-wasi-ghc-9.6/lib/wasm32-wasi-ghc-9.6.3.20230927/lib/bin/wasm32-wasi-unlit"
+  ghc-options: "-fexternal-interpreter" "-pgmL /nix/store/z8hizfp51krrfccb0pfqvr8wyvdp6kwv-wasm32-wasi-ghc-9.6/lib/wasm32-wasi-ghc-9.6.3.20230927/lib/bin/wasm32-wasi-unlit" "-pgmi /home/mgt/.ghcup/ghc/9.6.3/lib/ghc-9.6.3/bin/ghc-iserv"

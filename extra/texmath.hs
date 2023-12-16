@@ -11,7 +11,6 @@ import System.Environment
 import System.Console.GetOpt
 import System.Exit
 import Data.Maybe
-import Text.Pandoc.Definition
 import Network.URI (unEscapeString)
 import Data.Aeson (encode, (.=), object)
 import qualified Data.ByteString.Lazy as B
@@ -37,7 +36,6 @@ inHtml e =
 type Reader = T.Text -> Either T.Text [Exp]
 data Writer = XMLWriter (DisplayType -> [Exp] -> Element)
             | StringWriter (DisplayType -> [Exp] -> T.Text)
-            | PandocWriter (DisplayType -> [Exp] -> Maybe [Inline])
 
 readers :: [(T.Text, Reader)]
 readers = [
@@ -61,8 +59,7 @@ writers = [
   , ("typst", StringWriter writeTypst)
   , ("omml",  XMLWriter writeOMML)
   , ("xhtml",   XMLWriter (\dt e -> inHtml (writeMathML dt e)))
-  , ("mathml",   XMLWriter writeMathML)
-  , ("pandoc", PandocWriter writePandoc)]
+  , ("mathml",   XMLWriter writeMathML)]
 
 data Options = Options {
     optDisplay :: DisplayType
@@ -100,11 +97,6 @@ options =
 output :: DisplayType -> Writer -> [Exp] -> T.Text
 output dt (XMLWriter w) es    = output dt (StringWriter (\dt' -> T.pack . ppElement . w dt' )) es
 output dt (StringWriter w) es = w dt es
-output dt (PandocWriter w) es = tshow (fromMaybe fallback (w dt es))
-  where fallback = [Math mt $ writeTeX es]
-        mt = case dt of
-                  DisplayBlock  -> DisplayMath
-                  DisplayInline -> InlineMath
 
 err :: Bool -> Int -> T.Text -> IO a
 err cgi code msg = do
