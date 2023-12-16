@@ -110,6 +110,25 @@ Library
     Default-Language:    Haskell2010
     Hs-Source-Dirs:    src
 
+Library texmath-ffi
+    Build-depends:       base >= 4.11 && < 5,
+                         texmath,
+                         xml,
+                         aeson,
+                         bytestring,
+                         text,
+                         pretty-show,
+                         network-uri >= 2.6
+
+    Exposed-modules:     TexMath
+    if impl(ghc >= 6.12)
+      Ghc-Options:     -Wall -fno-warn-unused-do-bind -no-hs-main -optl-mexec-model=reactor -optl-Wl,--export=hs_init,--export=tex2typ,--export=malloc,--export=free
+    else
+      Ghc-Options:     -Wall
+    Ghc-Prof-Options:  -fprof-auto-exported
+    Default-Language:    Haskell2010
+    Hs-Source-Dirs:    ffi
+
 Executable texmath
     Default-Language:    Haskell2010
     Main-is:             texmath.hs
